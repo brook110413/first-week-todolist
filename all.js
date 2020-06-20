@@ -1,4 +1,4 @@
-let todoData = [];
+let todoData = JSON.parse(localStorage.getItem('todoList')) || [];
 let newTodo = document.querySelector('#newTodo');
 let addTodo = document.querySelector('#addTodo');
 let todoList = document.querySelector('#todoList');
@@ -9,6 +9,7 @@ addTodo.addEventListener('click', addTodoData);
 clearTaskBtn.addEventListener('click', clearTask);
 todoList.addEventListener('click', removeTodo);
 todoList.addEventListener('click', completedTodo);
+updateList();
 
 // 增加資料到data
 function addTodoData() {
@@ -18,6 +19,7 @@ function addTodoData() {
       title: document.getElementById('newTodo').value,
       completed: false,
     })
+    localStorage.setItem('todoList', JSON.stringify(todoData));
   }
   updateList();
 }
@@ -47,6 +49,7 @@ function updateList() {
 function clearTask(e) {
   e.preventDefault();
   todoData = [];
+  localStorage.setItem('todoList', JSON.stringify(todoData));
   updateList();
 }
 
@@ -60,6 +63,7 @@ function removeTodo(e) {
       }
     })
     todoData.splice(newIndex, 1);
+    localStorage.setItem('todoList', JSON.stringify(todoData));
     updateList();
   }
 }
